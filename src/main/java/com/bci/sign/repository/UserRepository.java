@@ -6,11 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
    @Query("SELECT u FROM UserEntity u WHERE u.email = :email")
-    //@Query(value = "select u.email from Users u where u.email in :email", nativeQuery = true)
-    UserEntity findUserByEmailNamedParam(
+   Optional<UserEntity> findUserByEmailNamedParam(
             @Param("email") String email);
 }

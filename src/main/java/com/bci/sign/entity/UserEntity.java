@@ -1,5 +1,6 @@
 package com.bci.sign.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ public class UserEntity {
     private Date lastLogin;
     private String token;
     private boolean isActive;
-    @OneToMany(targetEntity=Phone.class, mappedBy="userid", fetch= FetchType.EAGER)
+    @OneToMany(targetEntity=Phone.class, cascade = CascadeType.ALL,  mappedBy="userid")
+    @JsonManagedReference
     private List<Phone> phones;
 }
