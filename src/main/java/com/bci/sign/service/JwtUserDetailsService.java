@@ -70,7 +70,6 @@ public class JwtUserDetailsService implements UserDetailsService {
                     new ArrayList<>());
             final String token = jwtTokenUtil.generateToken(userDetails);
 
-            //EmailValidation.patternMatches(emailAddress, regexPattern);
             user.setUserid(UUID.randomUUID().toString());
             user.setActive(true);
             user.setCreated(new Date());
