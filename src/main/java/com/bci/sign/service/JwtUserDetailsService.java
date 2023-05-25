@@ -1,5 +1,6 @@
 package com.bci.sign.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
@@ -44,18 +45,22 @@ public class JwtUserDetailsService implements UserDetailsService {
     static final String regexPatterPassword =  "^(?=.*[A-Z])(?=.*[a-z].*[a-z])(?=.*\\d.*\\d)[A-Za-z\\d]{8,12}$";
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> userResponse = userRepo.findUserByEmailNamedParam(username);
-        if (!userResponse.isPresent()) {
-            throw new UsernameNotFoundException("User not found with mail: " + username);
-        }
-        return new User(userResponse.get().getEmail(), userResponse.get().getPassword(),
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity userResponse =this.getUserByEmail(email);
+        return new User(userResponse.getEmail(), userResponse.getPassword(),
                 new ArrayList<>());
+    }
+
+    public UserEntity getUserByEmail(String email){
+        Optional<UserEntity> userResponse = userRepo.findUserByEmailNamedParam(email);
+        if (!userResponse.isPresent()) {
+            throw new UsernameNotFoundException("User not found with mail: " + email);
+        }
+        return userResponse.get();
     }
 
     public UserResponse saveUser(UserEntity user) throws UserException {
         logger.info("usuario:" + user.getEmail());
-
 
         if (!UtilValidation.patternMatches(user.getEmail(), regexPatternEmail)) {
             throw new UserException("email must have the format aaaaaaa@undominio.algo");
@@ -72,12 +77,16 @@ public class JwtUserDetailsService implements UserDetailsService {
 
             user.setUserid(UUID.randomUUID().toString());
             user.setActive(true);
-            user.setCreated(new Date());
+            user.setCreated(LocalDateTime.now());
             user.setToken(token);
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userRepo.save(user);
             return new UserResponse(user.getUserid(), user.getCreated(), user.getLastLogin(),
                     user.getToken(), user.isActive());
         }
+    }
+
+    public void updateUser(UserEntity userEntity){
+        userRepo.updateUserByEmailNamedParam( userEntity.getToken(), userEntity.getEmail());
     }
 }

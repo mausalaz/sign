@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -36,8 +37,8 @@ class UserControllerTest {
         userEntityNum.setUserid("1");
         List<Phone> phones = Arrays.asList(new Phone(1L, 12L, 77, "45", userEntityNum));
         UserEntity userEntity = new UserEntity("1","mau","test@test.com", "password",
-                new Date(1222233), null,"token", true, phones );
-        UserResponse userResponse = new UserResponse("1",new Date(1222233), null,
+                LocalDateTime.now(), null,"token", true, phones );
+        UserResponse userResponse = new UserResponse("1",LocalDateTime.now(), null,
                 "token", true);
 
         when(jwtUserDetailsService.saveUser(userEntity)).thenReturn(userResponse);

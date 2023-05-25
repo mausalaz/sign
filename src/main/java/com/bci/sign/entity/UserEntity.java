@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -23,11 +24,10 @@ public class UserEntity {
     @Id
     private String userid;
     private String name;
-    @Column(name="email")
     private String email;
     private String password;
-    private Date created;
-    private Date lastLogin;
+    private LocalDateTime created;
+    private LocalDateTime lastLogin;
     private String token;
     private boolean isActive;
     @OneToMany(targetEntity=Phone.class, cascade = CascadeType.ALL,  mappedBy="userid")

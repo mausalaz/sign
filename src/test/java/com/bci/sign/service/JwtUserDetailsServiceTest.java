@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +48,7 @@ class JwtUserDetailsServiceTest {
         userEntityNum.setUserid("1");
         List<Phone> phones = Arrays.asList(new Phone(1L, 12L, 77, "45", userEntityNum));
         UserEntity userEntity = new UserEntity("1","mau","test@test.com", "pasH34sword",
-                new Date(1222233), null,"token", true, phones );
+                LocalDateTime.now(), null,"token", true, phones );
 
         jwtUserDetailsService.saveUser(userEntity);
 
@@ -59,7 +60,7 @@ class JwtUserDetailsServiceTest {
         userEntityNum.setUserid("1");
         List<Phone> phones = Arrays.asList(new Phone(1L, 12L, 77, "45", userEntityNum));
         UserEntity userEntity = new UserEntity("1","mau","test@test.com", "password",
-                new Date(1222233), null,"token", true, phones );
+                LocalDateTime.now(), null,"token", true, phones );
 
         UserException  actualException = assertThrows(UserException.class,
                 ()-> jwtUserDetailsService.saveUser(userEntity));
@@ -74,7 +75,7 @@ class JwtUserDetailsServiceTest {
         userEntityNum.setUserid("1");
         List<Phone> phones = Arrays.asList(new Phone(1L, 12L, 77, "45", userEntityNum));
         UserEntity userEntity = new UserEntity("1","mau","testtest.com", "pasH34sword",
-                new Date(1222233), null,"token", true, phones );
+                LocalDateTime.now(), null,"token", true, phones );
 
         UserException  actualException = assertThrows(UserException.class,
                 ()-> jwtUserDetailsService.saveUser(userEntity));
@@ -88,7 +89,7 @@ class JwtUserDetailsServiceTest {
         userEntityNum.setUserid("1");
         List<Phone> phones = Arrays.asList(new Phone(1L, 12L, 77, "45", userEntityNum));
         UserEntity userEntity = new UserEntity("1","mau","test@test.com", "pasH34sword",
-                new Date(1222233), null,"token", true, phones );
+                LocalDateTime.now(), null,"token", true, phones );
 
         UserDetails userDetails = new User(userEntity.getEmail(), userEntity.getPassword(),
                 new ArrayList<>());
@@ -113,7 +114,7 @@ class JwtUserDetailsServiceTest {
         userEntityNum.setUserid("1");
         List<Phone> phones = Arrays.asList(new Phone(1L, 12L, 77, "45", userEntityNum));
         UserEntity userEntity = new UserEntity("1","mau","test@test.com", "pasH34sword",
-                new Date(1222233), null,"token", true, phones );
+                LocalDateTime.now(), null,"token", true, phones );
 
 
         when(userRepository.findUserByEmailNamedParam("test@test.com")).thenReturn(Optional.of(userEntity));
