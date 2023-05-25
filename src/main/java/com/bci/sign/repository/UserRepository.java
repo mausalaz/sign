@@ -20,8 +20,9 @@ public interface UserRepository extends JpaRepository<UserEntity,Long> {
 
    @Modifying
    @Transactional
-   @Query(value = "UPDATE Users set token = :token WHERE email = :email", nativeQuery = true)
+   @Query(value = "UPDATE Users set lastLogin = :lastLogin, token = :token WHERE email = :email", nativeQuery = true)
    void updateUserByEmailNamedParam(
+           @Param("lastLogin") LocalDateTime lastLogin,
            @Param("token") String token,
            @Param("email") String email);
 }

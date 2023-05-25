@@ -2,7 +2,6 @@ package com.bci.sign.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -87,6 +86,6 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     public void updateUser(UserEntity userEntity){
-        userRepo.updateUserByEmailNamedParam( userEntity.getToken(), userEntity.getEmail());
+        userRepo.updateUserByEmailNamedParam(userEntity.getLastLogin(),userEntity.getToken(), userEntity.getEmail());
     }
 }

@@ -124,5 +124,19 @@ class JwtUserDetailsServiceTest {
         assertTrue(actualException.getMessage().contains("already registered"));
     };
 
+    @Test
+    public void updateUserTest() throws UserException {
+
+
+        UserEntity userEntity = new UserEntity("1","mau","test@test.com", "pasH34sword",
+                LocalDateTime.now(), null,"token", true, null );
+
+        jwtUserDetailsService.updateUser(userEntity);
+
+        verify(userRepository, times(1)).updateUserByEmailNamedParam(
+                userEntity.getLastLogin(), userEntity.getToken(), userEntity.getEmail()
+        );
+    };
+
 }
 
