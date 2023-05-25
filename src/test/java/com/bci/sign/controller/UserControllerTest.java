@@ -31,7 +31,7 @@ class UserControllerTest {
     JwtUserDetailsService jwtUserDetailsService;
 
     @Test
-    public void testFindAll() throws UserException {
+    public void saveUserTest() throws UserException {
         UserEntity userEntityNum = new UserEntity();
         userEntityNum.setUserid("1");
         List<Phone> phones = Arrays.asList(new Phone(1L, 12L, 77, "45", userEntityNum));
